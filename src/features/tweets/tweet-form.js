@@ -6,22 +6,21 @@ export default class TweetForm extends React.Component{
         super(props);
 
         this.state = {
-            message = null,
-            errorMessage = null
+            message : null,
+            errorMessage : null
         }
     }
 
     handleChange = (e) => {
-        const msg = e.target.value
         this.setState({
-            message : msg
+            message : e.target.value
         })
     }
 
     handleSubmit = (e) => {
         console.log("Bonjour jires");
         e.preventDefault();
-        console.log(this.message);
+        console.log(this.state.message);
     }
 
     render(){
@@ -32,7 +31,7 @@ export default class TweetForm extends React.Component{
                 </div>
 
                 <div className = "flex-fill">
-                    <form className = "card" onSubmit = { handleSubmit }>
+                    <form className = "card" onSubmit = { this.handleSubmit }>
                         <div className = "card-header"> 
                             Écrire un tweet
                         </div>
@@ -41,7 +40,7 @@ export default class TweetForm extends React.Component{
                                 <textarea 
                                     className = "form-control" 
                                     name = "content"
-                                    onChange = { handleChange } 
+                                    onChange = { this.handleChange } 
                                     placeholder = "write there!!!"
                                 />
                             </div>

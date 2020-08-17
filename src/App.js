@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-//import logo from './logo.svg';
-import './App.css';
 import {Route, Switch} from 'react-router-dom';
+
+import './App.css';
+import {TweetForm} from "./features";
 import Header from './components/Header';
 
 const Home = () => <h2>Home1</h2>;
@@ -35,6 +36,7 @@ class App extends Component {
         <Header />
         
         <Switch>
+          <Route path = '/tweet/new'> <TweetForm /> </Route>
           <Route path = '/favoris'> <Favoris /> </Route>
           <Route path = "/" > <Home /> </Route>          
         </Switch>
@@ -44,18 +46,3 @@ class App extends Component {
 }
 
 export default App;
-
-/* <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header> */

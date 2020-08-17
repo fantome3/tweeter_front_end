@@ -4,11 +4,13 @@ import {NavLink} from 'react-router-dom';
 function Header(){
     return(
         <header className = 'navbar navbar-expand-lg navbar-light bg-light'>
-            <img className = 'navbar-brand' alt = 'twitter' width="30" height="30" src = 'https://www.creativefreedom.co.uk/wp-content/uploads/2017/06/Twitter-featured.png'/>
+            <NavLink to = "/">
+                <img className = 'navbar-brand' alt = 'twitter' width="30" height="30" src = 'https://www.creativefreedom.co.uk/wp-content/uploads/2017/06/Twitter-featured.png'/>
+            </NavLink>
             <div className="navbar navbar-expand">
                 <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
-                        <NavLink to = "/" className = 'nav-link'> Home </NavLink>
+                        <NavLink to = "/tweet/new" className = 'nav-link'> TWEET </NavLink>
                     </li>
                 
                     <li className="nav-item">
