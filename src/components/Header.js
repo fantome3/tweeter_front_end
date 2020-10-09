@@ -10,7 +10,7 @@ function Header(){
             <div className="navbar navbar-expand">
                 <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
-                        <NavLink to = "/tweet/new" className = 'nav-link'> TWEET </NavLink>
+                        <NavLink to = "/tweets/new" className = 'nav-link'> TWEET </NavLink>
                     </li>
                 
                     <li className="nav-item">

@@ -1,4 +1,5 @@
 import React from 'react';
+import * as axios from 'axios';
 
 export default class TweetForm extends React.Component{
 
@@ -11,16 +12,60 @@ export default class TweetForm extends React.Component{
         }
     }
 
+    /*componentDidMount() {
+        this.updateTweet();
+    }
+
+    callBackendAPI = async () => {
+        let tweetId = useParams();
+        const response = await fetch(`tweets/new/${tweetId}`);
+        const body = await response.json();
+    
+        if (response.status !== 200) {
+          throw Error(body.message) 
+        }
+        return body;
+    }
+
+    updateTweet = (tweetId) => {
+        axios.get(`http://localhost:5000/tweets/new/${tweetId}`)
+             .then((res) => {
+                const tweet = res.data;//mettre tweet en global
+                this.setState({ tweet });//revoir ici
+            })
+             .catch(err => console.log(err));
+    }*/
+
     handleChange = (e) => {
         this.setState({
             message : e.target.value
         })
     }
 
+    /**
+     * normalement la redirection du update est déjà traiter, juste qu'il manque la prise en compte de la 
+     * route loraqu'il y a un paramètre. J'avoue que xa m'a depassé.
+     * @param {*} e 
+     */
     handleSubmit = (e) => {
-        console.log("Bonjour jires");
         e.preventDefault();
-        console.log(this.state.message);
+
+        const myTweet = {
+            message: this.state.message
+        }
+
+        let linkAxios;
+
+        if (this.props.tweet) {
+            linkAxios = `http://localhost:5000/tweets/new/${this.props.tweet._id}`
+        }else{
+            linkAxios = `http://localhost:5000/tweets/new/`
+        }
+
+        axios.post(linkAxios, myTweet)
+             .then(response => console.log(response.data));
+
+        window.location = '/tweets';
     }
 
     render(){
@@ -40,7 +85,8 @@ export default class TweetForm extends React.Component{
                                 <textarea 
                                     className = "form-control" 
                                     name = "content"
-                                    onChange = { this.handleChange } 
+                                    onChange = { this.handleChange }
+                                    //value = { this.props.tweet.message }
                                     placeholder = "write there!!!"
                                 />
                             </div>
