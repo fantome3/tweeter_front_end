@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Route, Switch} from 'react-router-dom';
 
 import './App.css';
-import {TweetForm, TweetList} from "./features";
+import {SignUp, SignIn, TweetForm, TweetList} from "./features";
 import Header from './components/Header';
 
 const Home = () => <h2>Home1</h2>;
@@ -38,12 +38,14 @@ class App extends Component {
     return (
       <div className="App d-flex flex-column">
         <Header />
-
+        
         <Switch>
-          
-          <Route path = '/tweets/new/:id?' >
-            <TweetForm /> 
-          </Route>
+        <Route 
+          path = '/tweets/new/:id?'
+          component={TweetForm} 
+        />
+        <Route path='/users/signup/form'> <SignUp /> </Route>
+        <Route path='/users/signin/form'> <SignIn /> </Route>
           <Route path = '/favoris'> <Favoris /> </Route>
           <Route path = "/tweets" > <TweetList /> </Route>
           <Route path = "/" > <Home /> </Route>    

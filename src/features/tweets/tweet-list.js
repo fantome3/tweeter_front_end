@@ -22,10 +22,13 @@ export default class TweetList extends Component {
     e.preventDefault();
     axios.delete(`http://localhost:5000/tweets/` + tweetId)
          .then((res) => {
-            const tweets = res.data;
-            this.setState({ tweets });
+            console.log(res.data);
         })
          .catch(err => console.log(err));
+
+    this.setState({ 
+      tweets: this.state.tweets.filter(tweet => tweet._id !== tweetId) 
+    })
   };
 
   tweetToEdit = (tweetId, e) => {
@@ -37,13 +40,13 @@ export default class TweetList extends Component {
     return(
         <div className="d-flex flex-row content mx-auto">
             <div className="profile-container">
-                <Profile />
+                <Profile tweets={ this.state.tweets } />
             </div>
 
             <div className="flex-fill d-flex flex-column">
               { 
                 this.state.tweets.map( (tweet) => <Tweet key={ tweet._id }  tweet = { tweet }
-                    editTweet = { this.tweetToEdit }
+                    //editTweet = { this.tweetToEdit }
                     deleteTweet = { this.deleteOneTweet } 
                   />)
               }

@@ -7,34 +7,26 @@ export default class TweetForm extends React.Component{
         super(props);
 
         this.state = {
-            message : null,
+            messageId: null,
+            message : "",
             errorMessage : null
         }
     }
 
-    /*componentDidMount() {
-        this.updateTweet();
-    }
-
-    callBackendAPI = async () => {
-        let tweetId = useParams();
-        const response = await fetch(`tweets/new/${tweetId}`);
-        const body = await response.json();
-    
-        if (response.status !== 200) {
-          throw Error(body.message) 
+    componentDidMount() {
+        if(this.props.match.params.id){
+            this.getSpecificTweet(this.props.match.params.id);
         }
-        return body;
     }
 
-    updateTweet = (tweetId) => {
+    getSpecificTweet = (tweetId) => {
         axios.get(`http://localhost:5000/tweets/new/${tweetId}`)
              .then((res) => {
-                const tweet = res.data;//mettre tweet en global
-                this.setState({ tweet });//revoir ici
+                const tweet = res.data;
+                this.setState({ message: tweet.message, messageId: tweetId });
             })
              .catch(err => console.log(err));
-    }*/
+    }
 
     handleChange = (e) => {
         this.setState({
@@ -56,8 +48,8 @@ export default class TweetForm extends React.Component{
 
         let linkAxios;
 
-        if (this.props.tweet) {
-            linkAxios = `http://localhost:5000/tweets/new/${this.props.tweet._id}`
+        if (this.state.messageId) {
+            linkAxios = `http://localhost:5000/tweets/new/${this.state.messageId}`
         }else{
             linkAxios = `http://localhost:5000/tweets/new/`
         }
@@ -65,7 +57,7 @@ export default class TweetForm extends React.Component{
         axios.post(linkAxios, myTweet)
              .then(response => console.log(response.data));
 
-        window.location = '/tweets';
+        //window.location = '/tweets';
     }
 
     render(){
@@ -86,7 +78,7 @@ export default class TweetForm extends React.Component{
                                     className = "form-control" 
                                     name = "content"
                                     onChange = { this.handleChange }
-                                    //value = { this.props.tweet.message }
+                                    value = { this.state.message }
                                     placeholder = "write there!!!"
                                 />
                             </div>

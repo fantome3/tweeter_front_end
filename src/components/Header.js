@@ -14,7 +14,11 @@ function Header(){
                     </li>
                 
                     <li className="nav-item">
-                        <NavLink to = "/favoris" className = 'nav-link'> Favoris </NavLink>
+                        <NavLink to = "/users/signin/form" className = 'nav-link'> Connexion </NavLink>
+                    </li>
+                    
+                    <li className="nav-item">
+                        <NavLink to = "/auth/signout" className = 'nav-link'> Deconnexion </NavLink>
                     </li>
                 </ul>
             </div>
