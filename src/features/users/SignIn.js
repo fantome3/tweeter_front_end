@@ -1,13 +1,17 @@
 import React from "react";
+//import { useDispatch, useSelector } from "react-redux"
 import { Switch, Link, Redirect } from "react-router-dom";
-import * as axios from "axios";
+//import { login } from '../../store/actions';
+//import * as axios from "axios";
+import { connect } from 'react-redux';
+import { login } from "../../store/actions/action.auth";
 
-export default class SignIn extends React.Component {
+class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      authentificated: false,
-      error: null,
+      authentificated: this.props.isLoggedIn,
+      error: "",
       email: "",
       password: "",
     };
@@ -23,21 +27,30 @@ export default class SignIn extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({ error: "" });
 
     const user = {
       email: this.state.email,
       password: this.state.password,
     };
 
-    axios.post("http://localhost:5000/auth/signin", user).then((response) => {
-      if (response.data) {
+    //this.props affiche toutes les valeurs retournées pris en paramètre dans connect.
+    //dans notre cas nous avons {isLoggedIn, login}
+    this.props.login(user).then(() => {
+      this.setState({ authentificated: true });
+    })
+    .catch((error) => {
+      this.setState({ error });
+    });
+    /*axios.post("http://localhost:5000/auth/signin", user).then((response) => {
+      if (response.data.accessToken) {
+        localStorage.setItem("user", JSON.stringify(response.data));
         this.setState({ authentificated: true });
+        //return response.data;
       } else {
         this.setState({ authentificated: false });
         this.setState({ error: "veuillez verifier vos identifiants" });
       }
-    });
+    });*/
   }
 
   render() {
@@ -92,3 +105,11 @@ export default class SignIn extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  const { isLoggedIn } = state.authentication
+  return {
+    isLoggedIn
+  };
+}
+export default connect(mapStateToProps, { login })(SignIn);

@@ -43,7 +43,8 @@ export default class TweetForm extends React.Component{
         e.preventDefault();
 
         const myTweet = {
-            message: this.state.message
+            message: this.state.message,
+            author: JSON.parse(localStorage.user).user._id
         }
 
         let linkAxios;
@@ -57,7 +58,7 @@ export default class TweetForm extends React.Component{
         axios.post(linkAxios, myTweet)
              .then(response => console.log(response.data));
 
-        //window.location = '/tweets';
+        window.location = '/tweets';
     }
 
     render(){

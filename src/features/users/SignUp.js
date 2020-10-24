@@ -1,8 +1,10 @@
 import React from 'react'
-import * as axios from 'axios';
+//import * as axios from 'axios';
 import {Link, Switch, Redirect} from 'react-router-dom'
+import { connect } from 'react-redux';
+import { register } from '../../store/actions/action.auth';
 
-export default class SignUp extends React.Component{
+class SignUp extends React.Component{
 
     constructor(props){
         super(props);
@@ -37,11 +39,12 @@ export default class SignUp extends React.Component{
                     password: this.state.password
                 }
             }
-            
-            axios.post('http://localhost:5000/users/signup', user)
-                 .then(response => console.log(response.data));
 
-            window.location = '/tweets';
+            this.props.register(user);
+            /*axios.post('http://localhost:5000/users/signup', user)
+                 .then(response => this.setState({ authentificated: true }));
+*/
+            //window.location = '/tweets';
         }else{
             this.setState({ error: 'mot de passe différent' });
         }
@@ -108,3 +111,10 @@ export default class SignUp extends React.Component{
         );
     }
 }
+
+export default connect(state => {
+    const { isLoggedIn } = state.authentication
+    return {
+      isLoggedIn
+    };
+  }, { register })(SignUp);

@@ -12,7 +12,7 @@ export default class TweetList extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:5000/tweets/`).then((res) => {
+    axios.get(`http://localhost:5000/tweets`).then((res) => {
       const tweets = res.data;
       this.setState({ tweets });
     });
@@ -20,7 +20,7 @@ export default class TweetList extends Component {
 
   deleteOneTweet = (tweetId, e) => {
     e.preventDefault();
-    axios.delete(`http://localhost:5000/tweets/` + tweetId)
+    axios.delete(`http://localhost:5000/tweets` + tweetId)
          .then((res) => {
             console.log(res.data);
         })
@@ -30,11 +30,6 @@ export default class TweetList extends Component {
       tweets: this.state.tweets.filter(tweet => tweet._id !== tweetId) 
     })
   };
-
-  tweetToEdit = (tweetId, e) => {
-    e.preventDefault();
-    window.location = '/tweets/new/'+tweetId;
-  }
 
   render() {
     return(
@@ -46,7 +41,6 @@ export default class TweetList extends Component {
             <div className="flex-fill d-flex flex-column">
               { 
                 this.state.tweets.map( (tweet) => <Tweet key={ tweet._id }  tweet = { tweet }
-                    //editTweet = { this.tweetToEdit }
                     deleteTweet = { this.deleteOneTweet } 
                   />)
               }
